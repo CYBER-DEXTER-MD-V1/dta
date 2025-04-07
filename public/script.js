@@ -15,7 +15,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 
     if (data.success) {
       result.innerHTML = `✅ Upload Successful!<br>
-        <a href="${data.fileUrl}" target="_blank" download>Download File</a>`;
+        <a href="${data.fileUrl}" target="_blank" download class="download-btn">Download File</a>`;
       fetchFileList();  // Reload file list after successful upload
     } else {
       result.innerHTML = `❌ Upload failed: ${data.message}`;
@@ -36,7 +36,8 @@ async function fetchFileList() {
 
     data.files.forEach(file => {
       const fileElement = document.createElement('div');
-      fileElement.innerHTML = `<a href="${file.downloadUrl}" target="_blank" download>${file.name}</a>`;
+      fileElement.classList.add('file-item');
+      fileElement.innerHTML = `<button class="download-btn" onclick="window.location.href='${file.downloadUrl}'">Download ${file.name}</button>`;
       fileList.appendChild(fileElement);
     });
   } catch (err) {
