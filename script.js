@@ -9,7 +9,7 @@ const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 // GitHub token and repository info
-const githubToken = 'YOUR_GITHUB_ACCESS_TOKEN';  // Add your GitHub Access Token here
+const githubToken = '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';  // Add your GitHub Access Token here
 const repoOwner = 'CYBER-DEXTER-MD-V1';  // Your GitHub username
 const repoName = 'CONTACT-PUSH-SITE-';  // Your GitHub repository name
 const repoPath = 'data.json';  // Path to the data.json file in your repo
