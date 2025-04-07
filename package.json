@@ -1,7 +1,7 @@
 {
   "name": "file-upload-site",
   "version": "1.0.0",
-  "description": "A stylish file upload site that saves to GitHub",
+  "description": "Upload files to GitHub with style",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
