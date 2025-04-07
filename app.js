@@ -79,7 +79,7 @@ async function getFileListFromGitHub() {
     });
 
     return response.data
-      .filter(file => file.type === 'file')
+      .filter(file => file.type === 'file')  // Filter only files (not folders)
       .map(file => ({
         name: file.name,
         downloadUrl: file.download_url
