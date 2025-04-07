@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Upload Your File</h1>
+    <form id="fileForm" enctype="multipart/form-data">
+        <label for="image">Image File:</label>
+        <input type="file" name="image" id="image" accept="image/*"><br>
+        
+        <label for="audio">Audio File:</label>
+        <input type="file" name="audio" id="audio" accept="audio/*"><br>
+
+        <label for="video">Video File:</label>
+        <input type="file" name="video" id="video" accept="video/*"><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <div id="filePreview"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
