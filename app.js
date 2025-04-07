@@ -18,8 +18,14 @@ const REPO_NAME = 'CONTACT-PUSH-SITE-';
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Homepage route
-app.get('/', (_, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', async (_, res) => {
+  try {
+    const files = await getFileListFromGitHub();
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  } catch (err) {
+    console.error("Error fetching file list:", err.message);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
 });
 
 // Upload route
@@ -31,7 +37,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 
   const fileContent = fs.readFileSync(file.path, { encoding: 'base64' });
-  const githubPath = `${file.originalname}`; // no 'uploads/' prefix
+  const githubPath = `${file.originalname}`;
   const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${githubPath}`;
 
   try {
@@ -61,6 +67,28 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     });
   }
 });
+
+// Fetch file list from GitHub repo
+async function getFileListFromGitHub() {
+  try {
+    const response = await axios.get(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+        Accept: 'application/vnd.github.v3+json'
+      }
+    });
+
+    return response.data
+      .filter(file => file.type === 'file')
+      .map(file => ({
+        name: file.name,
+        downloadUrl: file.download_url
+      }));
+  } catch (err) {
+    console.error("Error fetching file list:", err.message);
+    throw new Error('Failed to fetch file list from GitHub');
+  }
+}
 
 // Start server
 app.listen(PORT, () => {
